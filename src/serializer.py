@@ -23,12 +23,12 @@ print(pickle.dumps(data))                   # dumps gives us a byte object from 
 #---------------------------------------------------------------------------------------------- DESERIALIZING DATA ---------
 
 # open a file in read binary mode and load the serialized data into it.
-with open("saves/file.pkl", mode="rb") as file:
-    a = pickle.load(file)                   # load returns an object from a file
+# with open("saves/file.pkl", mode="rb") as file:
+#     a = pickle.load(file)                   # load returns an object from a file
 
 # loads returns the unpickled data. This will print out 20.
-print(pickle.loads(b'\x80\x04K\x14.'))      # loads returns an object from a byte object.
-print(a)
+# print(pickle.loads(b'\x80\x04K\x14.'))      # loads returns an object from a byte object.
+# print(a)
 
 class Car:
 
@@ -50,15 +50,21 @@ car2 = Car("Ford F150", 2021)
 
 car_array = [car, car1, car2]
 
-print(car_array)
+# print(car_array)
 
 
 # serialize the data.
-with open("saves/file.pkl", mode="wb") as file:
+with open("saves/file.pkl", mode="ab+") as file:
     pickle.dump(car_array, file)
 
-# deserialize the car.
+# deserialize the array. We have been appending, so I can iterate until an error.
+all_data = []
 with open("saves/file.pkl", mode="rb") as file:
-    b = pickle.load(file)
+    while True:
+        try:
+                all_data.append(pickle.load(file))
+        except EOFError:
+            break
+            
 
-print(b)
+print(all_data)
