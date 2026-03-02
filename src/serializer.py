@@ -29,3 +29,36 @@ with open("saves/file.pkl", mode="rb") as file:
 # loads returns the unpickled data. This will print out 20.
 print(pickle.loads(b'\x80\x04K\x14.'))      # loads returns an object from a byte object.
 print(a)
+
+class Car:
+
+    def __init__(self, model, year):
+        self.model = model
+        self.year = year
+
+    def __str__(self):
+        return self.model + "; " + str(self.year)
+    
+    def __repr__(self):
+        return str(self)
+
+
+# test for serializing car object.
+car = Car("Toyota Corolla", 2011)
+car1 = Car("Toyota Sienna", 2010)
+car2 = Car("Ford F150", 2021)
+
+car_array = [car, car1, car2]
+
+print(car_array)
+
+
+# serialize the data.
+with open("saves/file.pkl", mode="wb") as file:
+    pickle.dump(car_array, file)
+
+# deserialize the car.
+with open("saves/file.pkl", mode="rb") as file:
+    b = pickle.load(file)
+
+print(b)
